@@ -1,4 +1,5 @@
-/*const add = (firstNumber, secondNumber) => {
+/* Ejercicio 16 abril
+const add = (firstNumber, secondNumber) => {
     return firstNumber + secondNumber;
 }
 
