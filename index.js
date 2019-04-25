@@ -1,29 +1,32 @@
 #!/usr/bin/env node
 
-/* ejercicio 16 abril
-const mdLinks = require('./md-links');
-console.log(mdLinks.add(2, 2))
-console.log(mdLinks.multiply(3, 5))*/
+"use strict"
+let mds;
+let mdv;
+let TexDir = process.argv[2];
+let result;
+process.argv.forEach(element => {
+    if (element == "--validate") {
+        mdv = "1";
+        result = "1";
+    }
+    if (element == "--stats") {
+        mds = "1";
+        result = "2"
+    }
+});
+if (mdv == mds) { result = "3" };
+
+console.log(result);
+console.log(process.argv);
 
 
-// Extrae la extensión del archivo
-const path = require('path')
-const ext = path.extname('README.md')
-console.log(ext);
 
-// Lee archivo en terminal
+/* Lee archivo en terminal
 const fs = require('fs');
 fs.readFile('./README.md', 'utf-8', (err, data) => {
     if (err) {
         throw err;
     }
     console.log(data);
-});
-
-//Extrae links
-const markdownLinkExtractor = require('markdown-link-extractor');
-const markdown = fs.readFileSync('README.md').toString();
-const links = markdownLinkExtractor(markdown);
-links.forEach(function(link) {
-    console.log(link);
-});
+});*/

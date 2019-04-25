@@ -5,6 +5,7 @@
         "test": "jest --coverage"
     },
     "dependencies": {
+        "filehound": "^1.17.0",
         "jest": "^24.7.1",
         "markdown-link-extractor": "^1.2.0"
     }
