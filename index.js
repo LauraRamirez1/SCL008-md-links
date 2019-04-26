@@ -1,32 +1,21 @@
 #!/usr/bin/env node
 
-"use strict"
-let mds;
-let mdv;
+let mds = 0;
+let mdv = 0;
 let TexDir = process.argv[2];
-let result;
+let valStas = 0;
 process.argv.forEach(element => {
     if (element == "--validate") {
-        mdv = "1";
-        result = "1";
+        mdv = 1;
+        valStas = 1;
     }
     if (element == "--stats") {
-        mds = "1";
-        result = "2"
+        mds = 1;
+        valStas = 2;
     }
 });
-if (mdv == mds) { result = "3" };
+if (mdv == mds && mds != 0) { valStas = 3 };
 
-console.log(result);
-console.log(process.argv);
-
-
-
-/* Lee archivo en terminal
-const fs = require('fs');
-fs.readFile('./README.md', 'utf-8', (err, data) => {
-    if (err) {
-        throw err;
-    }
-    console.log(data);
-});*/
+module.exports = {
+    valStas
+}
