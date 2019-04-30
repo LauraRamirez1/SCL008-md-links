@@ -38,4 +38,4 @@ md-links.js
 ## Versionado 📌
 Version: 0.1.0
 ## Autor ✒️
-María Elena Hernández Payán - Master
+Laura Natalia Ramirez Rojas - Master
