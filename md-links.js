@@ -3,8 +3,10 @@ const markdownLinkExtractor = require('markdown-link-extractor');
 const fs = require('fs');
 const fetch = require('node-fetch');
 const index = require("./index.js");
+const path = require("path");
+
 const files = FileHound.create()
-    .paths('/home/laboratoria/Documents/Laura/Prueba')
+    .paths(process.argv[2])
     .ext('md')
     .find();
 
@@ -12,14 +14,66 @@ files.then(res => {
     removeNodeModulesMdFiles(res)
     Promise.all([res]).then(values => {
         values[0].forEach(function(element) {
+            let fileIn = element;
             readLinks(element, "utf-8")
                 .then(res => {
                     const links = markdownLinkExtractor(res)
-                    links.forEach(function(link) {
-                        fetch(link).then((res) => {
-                            console.log(res.url + " " + res.status + " " + res.statusText);
-                        });
-                    });
+                    switch (index.valStas) {
+                        case 0:
+                            console.log(fileIn)
+                            console.log(links);
+                            break;
+                        case 1:
+                            links.forEach(function(link) {
+                                fetch(link).then((res) => {
+                                    let liks1 = {}
+                                    liks1.link = res.url;
+                                    liks1.status = res.status + " " + res.statusText;
+                                    console.log(liks1);
+                                });
+                            });
+                            break;
+                        case 2:
+                            {
+
+                                let stats = {
+                                    LinksTotal: 0,
+                                    LinksUnique: 0,
+                                    LinksBroken: 0
+                                };
+
+                                stats.LinksTotal = links.length;
+                                let LinksUnique = [];
+
+                                links.forEach((element) => {
+                                    if (!LinksUnique.includes(element.links)) {
+                                        LinksUnique.push(element.link);
+                                    }
+                                    if (element.status >= 400) {
+                                        stats.LinksBroken = stats.LinksBroken + 1;
+                                    }
+
+                                })
+                                stats.LinksUnique = LinksUnique.length;
+                                console.log(fileIn)
+                                console.log(stats)
+                            };
+
+                            break;
+
+                        case 3:
+                            console.log("Faltan estadisticas");
+                            links.forEach(function(link) {
+                                fetch(link).then((res) => {
+                                    let liks1 = {}
+                                    liks1.link = res.url;
+                                    liks1.status = res.status + " " + res.statusText;
+                                    console.log(liks1);
+
+                                });
+                            });
+                            break;
+                    }
                 })
                 .catch(err => {
                     console.log(err);
@@ -27,6 +81,7 @@ files.then(res => {
         });
     });
 });
+
 const removeNodeModulesMdFiles = (arr) => {
     return new Promise((resolve, reject) => {
         const result = arr.filter(element => {
@@ -45,5 +100,3 @@ const readLinks = (fileName, type) => {
         });
     });
 }
-
-console.log(index.valStas)

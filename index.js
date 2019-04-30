@@ -2,7 +2,6 @@
 
 let mds = 0;
 let mdv = 0;
-let TexDir = process.argv[2];
 let valStas = 0;
 process.argv.forEach(element => {
     if (element == "--validate") {
