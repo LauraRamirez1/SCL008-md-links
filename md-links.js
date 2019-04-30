@@ -26,12 +26,16 @@ files.then(res => {
                         case 1:
                             links.forEach(function(link) {
                                 fetch(link).then((res) => {
-                                    let liks1 = {}
-                                    liks1.link = res.url;
-                                    liks1.status = res.status + " " + res.statusText;
-                                    console.log(liks1);
-                                });
+                                        let liks1 = {}
+                                        liks1.link = res.url;
+                                        liks1.status = res.status + " " + res.statusText;
+                                        console.log(liks1);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error.message);
+                                    })
                             });
+
                             break;
                         case 2:
                             {
@@ -45,8 +49,8 @@ files.then(res => {
                                 let LinksUnique = [];
 
                                 links.forEach((element) => {
-                                    if (!LinksUnique.includes(element.links)) {
-                                        LinksUnique.push(element.link);
+                                    if (!LinksUnique.includes(element)) {
+                                        LinksUnique.push(element);
                                     }
 
                                 })
@@ -58,19 +62,36 @@ files.then(res => {
                             break;
 
                         case 3:
-                            console.log("Faltan estadisticas");
                             links.forEach(function(link) {
                                 fetch(link).then((res) => {
-                                    let liks1 = {}
-                                    liks1.link = res.url;
-                                    liks1.status = res.status + " " + res.statusText;
-                                    console.log(liks1);
-                                    //if (element.status >= 400) {
-                                    //    stats.LinksBroken = stats.LinksBroken + 1;
-                                    //}
-
-                                });
+                                        let liks1 = {}
+                                        liks1.link = res.url;
+                                        liks1.status = res.status + " " + res.statusText;
+                                        console.log(liks1);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error.message);
+                                    })
                             });
+
+                            let stats = {
+                                LinksTotal: 0,
+                                LinksUnique: 0,
+                                LinksBroken: 0,
+                            };
+
+                            stats.LinksTotal = links.length;
+                            let LinksUnique = [];
+
+                            links.forEach((element) => {
+                                if (!LinksUnique.includes(element)) {
+                                    LinksUnique.push(element);
+                                }
+                            })
+                            stats.LinksUnique = LinksUnique.length;
+                            console.log(fileIn)
+                            console.log(stats)
+
                             break;
                     }
                 })
